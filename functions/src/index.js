@@ -11,36 +11,35 @@ const functions = require('firebase-functions');
 // });
 
 export const register = functions.https.onRequest((req, res) => {
-    res.header('Access-Control-Allow-Methods', 'POST');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    if (req.method === 'OPTIONS') {
-        res.send(200);
-        return;
-    }
-    const allowedFields = [
-        'firstMame',
-        'lastName',
-        'email',
-        'password',
-    ];
-    const body = req.body;
+  res.header('Access-Control-Allow-Methods', 'POST');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') {
+    res.send(200);
+    return;
+  }
 
-    let missingRequired = null;
-    ['firstName', 'lastName', 'email', 'password'].forEach(key => {
-        if (!body[key]) {
-            missingRequired = key;
-        }
-    });
-    if (missingRequired) {
-        res.status(400).send({ message: `Missing ${missingRequired}.` });
-        return;
-    }
+  const allowedFields = ['firstMame', 'lastName', 'email', 'password'];
 
-    Register(_.pick(body, allowedFields).then(() => {
-        res.status(204).end();
+  const body = req.body;
+
+  let missingRequired = null;
+  ['firstName', 'lastName', 'email', 'password'].forEach(key => {
+    if (!body[key]) {
+      missingRequired = key;
+    }
+  });
+
+  if (missingRequired) {
+    res.status(400).send({ message: `Missing ${missingRequired}.` });
+    return;
+  }
+
+  Register(_.pick(body, allowedFields))
+    .then(() => {
+      res.status(204).end();
     })
-        .catch(err => {
-            console.error('Error při registraci', err);
-            res.status(500).send({ message: 'Unknown Error' });
-        }));
-};
+    .catch(err => {
+      console.error('Error při registraci', err);
+      res.status(500).send({ message: 'Unknown Error' });
+    });
+});
