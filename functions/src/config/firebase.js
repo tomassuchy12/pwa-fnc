@@ -1,7 +1,7 @@
-<script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+import * as firebase from 'firebase';
+
 // Initialize Firebase
-<script>
-var config = {
+let config = {
     apiKey: "AIzaSyDqlxiv0W1uLtvM3XrrKU75rZ3HfL7Jwb8",
     authDomain: "pwa-bp.firebaseapp.com",
     databaseURL: "https://pwa-bp.firebaseio.com",
@@ -10,6 +10,5 @@ var config = {
     messagingSenderId: "198778315233"
 };
 firebase.initializeApp(config);
-</script>
 
-export default firebase;
+export default firebase ;
