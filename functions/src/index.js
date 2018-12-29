@@ -37,6 +37,7 @@ export const register = functions.https.onRequest((req, res) => {
   Register(_.pick(body, allowedFields))
     .then(() => {
       res.status(204).end();
+      return;
     })
     .catch(err => {
       console.error('Error při registraci', err);

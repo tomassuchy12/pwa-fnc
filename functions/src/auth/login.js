@@ -1,6 +1,11 @@
-firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
+import firebase from '../config/firebase';
 
-});
+const Login = (email, password) => (
+    firebase.auth().createUserWithEmailAndPassword(email, password).then(() => { return null; }).catch(error => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+}));
+
+export default Login;
