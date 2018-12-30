@@ -63,3 +63,9 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+.vscode
+functions/etc
+functions/node_modules
+functions/lib
+functions/.runtimeconfig.json

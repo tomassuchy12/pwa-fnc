@@ -1,7 +1,8 @@
 import Register from './auth/register.js';
 import * as _ from 'lodash';
-
-const functions = require('firebase-functions');
+import * as functions from 'firebase-functions';
+import config from './config';
+import { IRegister } from './config/register.js';
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -11,6 +12,7 @@ const functions = require('firebase-functions');
 // });
 
 export const register = functions.https.onRequest((req, res) => {
+  res.header('Access-Control-Allow-Origin', config.http.allowedorigins);
   res.header('Access-Control-Allow-Methods', 'POST');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') {
@@ -19,7 +21,6 @@ export const register = functions.https.onRequest((req, res) => {
   }
 
   const allowedFields = ['firstMame', 'lastName', 'email', 'password'];
-
   const body = req.body;
 
   let missingRequired = null;
@@ -34,7 +35,7 @@ export const register = functions.https.onRequest((req, res) => {
     return;
   }
 
-  Register(_.pick(body, allowedFields))
+  Register(_.pick(body, allowedFields) as IRegister)
     .then(() => {
       res.status(204).end();
       return;
